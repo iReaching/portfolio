@@ -1,0 +1,112 @@
+---
+interface SkillCategory {
+  title: string;
+  code: string;
+  skills: { name: string; level?: number }[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    title: 'Programming Languages',
+    code: 'PL',
+    skills: [
+      { name: 'JavaScript', level: 82 },
+      { name: 'TypeScript', level: 76 },
+      { name: 'PHP', level: 78 },
+      { name: 'SQL / MySQL', level: 78 },
+      { name: 'HTML/CSS', level: 88 },
+      { name: 'C#', level: 62 },
+    ],
+  },
+  {
+    title: 'Tools & Technologies',
+    code: 'TT',
+    skills: [
+      { name: 'Git & GitHub' },
+      { name: 'VS Code' },
+      { name: 'MySQL Workbench' },
+      { name: 'Figma' },
+      { name: 'Jira' },
+      { name: 'React' },
+      { name: 'Tailwind CSS' },
+      { name: 'Unity' },
+    ],
+  },
+  {
+    title: 'IT & Support Skills',
+    code: 'IT',
+    skills: [
+      { name: 'System Administration' },
+      { name: 'Basic LAN Troubleshooting' },
+      { name: 'Hardware Diagnostics' },
+      { name: 'Printer & Driver Setup' },
+      { name: 'Windows Support' },
+      { name: 'Device Configuration' },
+      { name: 'Issue Documentation' },
+      { name: 'Help Desk Support' },
+    ],
+  },
+  {
+    title: 'AI & Workflow Skills',
+    code: 'AI',
+    skills: [
+      { name: 'Codex-Assisted Debugging' },
+      { name: 'ChatGPT / Claude / Gemini' },
+      { name: 'Technical Documentation' },
+      { name: 'Problem Solving' },
+      { name: 'Testing & Debugging' },
+      { name: 'Project Planning' },
+    ],
+  },
+];
+---
+
+<section id="skills" class="relative py-20 sm:py-28">
+  <div class="absolute inset-0 bg-[rgb(var(--color-bg-secondary)_/_0.5)]" aria-hidden="true"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(var(--color-primary))] mb-3 animate-on-scroll">What I bring</p>
+      <h2 class="section-heading gradient-text animate-on-scroll">Skills & Expertise</h2>
+      <p class="section-subheading animate-on-scroll">
+        A practical skill set spanning IT support, full-stack web development, database work, and documentation.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {skillCategories.map((category) => (
+        <div class="glass glass-hover rounded-2xl p-6 sm:p-8 animate-on-scroll">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400/10 text-xs font-bold text-cyan-200" aria-hidden="true">{category.code}</span>
+            <h3 class="text-xl font-bold">{category.title}</h3>
+          </div>
+
+          <div class="space-y-4">
+            {category.skills.map((skill) => (
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-sm font-medium text-[rgb(var(--color-text-secondary))]">{skill.name}</span>
+                  {skill.level && (
+                    <span class="text-xs font-mono text-[rgb(var(--color-primary))]">{skill.level}%</span>
+                  )}
+                </div>
+                {skill.level ? (
+                  <div class="h-1.5 rounded-full bg-[rgb(var(--color-bg-primary))]">
+                    <div
+                      class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-amber-300 transition-all duration-1000 ease-out"
+                      style={`width: ${skill.level}%`}
+                    ></div>
+                  </div>
+                ) : (
+                  <div class="h-1.5 rounded-full bg-gradient-to-r from-cyan-500/20 to-emerald-500/20">
+                    <div class="h-full w-full rounded-full bg-gradient-to-r from-cyan-500/40 to-emerald-500/40"></div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,62 @@
+---
+const highlights = [
+  {
+    code: 'SD',
+    title: 'Web Development',
+    description: 'Building responsive dashboards and database-driven web apps with React, TypeScript, PHP, MySQL, and Tailwind CSS.',
+  },
+  {
+    code: 'IT',
+    title: 'IT Support',
+    description: 'Troubleshooting hardware, software, driver, printer, Windows, and connectivity issues in a real IT environment.',
+  },
+  {
+    code: 'DB',
+    title: 'Database Workflows',
+    description: 'Creating schemas, connecting MySQL tables, and supporting role-based workflows for management systems.',
+  },
+  {
+    code: 'AI',
+    title: 'AI-Assisted Development',
+    description: 'Using tools like ChatGPT, Claude, Gemini, and Codex to support debugging, documentation, and learning.',
+  },
+];
+---
+
+<section id="about" class="relative py-20 sm:py-28">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(var(--color-primary))] mb-3 animate-on-scroll">Get to know me</p>
+      <h2 class="section-heading gradient-text animate-on-scroll">About Me</h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="animate-on-scroll">
+        <p class="text-lg text-[rgb(var(--color-text-secondary))] leading-relaxed mb-6">
+          I'm a <span class="text-[rgb(var(--color-text-primary))] font-semibold">Bachelor of Science in Information Technology graduate </span>
+          at Pamantasan ng Lungsod ng Valenzuela, expected to graduate in 2026. My work combines hands-on IT support,
+          web development, troubleshooting, and practical system building.
+        </p>
+        <p class="text-lg text-[rgb(var(--color-text-secondary))] leading-relaxed mb-6">
+          I completed <span class="text-[rgb(var(--color-text-primary))] font-semibold">486 hours of IT support training </span>
+          at Our Lady of Fatima University, where I assisted with desktop, laptop, printer, driver, Windows, and network-related issues.
+          I also led the development of CondoLink, a full-stack condominium management system.
+        </p>
+        <p class="text-lg text-[rgb(var(--color-text-secondary))] leading-relaxed">
+          I'm looking for junior developer, IT support, or hybrid technology roles where I can keep improving,
+          support users well, and build reliable tools for real workflows.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        {highlights.map((item) => (
+          <div class="glass glass-hover rounded-2xl p-6 animate-on-scroll">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-400/10 text-sm font-bold text-cyan-200 mb-3" aria-hidden="true">{item.code}</span>
+            <h3 class="text-base font-bold mb-2">{item.title}</h3>
+            <p class="text-sm text-[rgb(var(--color-text-secondary))] leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

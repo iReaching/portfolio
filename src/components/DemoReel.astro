@@ -1,0 +1,30 @@
+---
+import { assetUrl } from '../data/site';
+
+const demoReelUrl = assetUrl('demo-reel.mp4');
+---
+
+<section id="demo-reel" class="relative py-20 sm:py-28">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(var(--color-primary))] mb-3 animate-on-scroll">Project walkthrough</p>
+      <h2 class="section-heading gradient-text animate-on-scroll">Demo Reel</h2>
+      <p class="section-subheading animate-on-scroll">
+        A short video walkthrough showing selected work, project flow, and interface details.
+      </p>
+    </div>
+
+    <div class="glass rounded-2xl overflow-hidden animate-on-scroll">
+      <video
+        class="w-full aspect-video bg-black"
+        controls
+        preload="metadata"
+        playsinline
+        aria-label="Andrei Rosca demo reel video"
+      >
+        <source src={demoReelUrl} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,110 @@
+---
+interface TimelineItem {
+  date: string;
+  title: string;
+  organization: string;
+  description: string;
+  type: 'education' | 'experience' | 'certification';
+  tags?: string[];
+}
+
+const timelineItems: TimelineItem[] = [
+  {
+    date: '2022 - 2026',
+    title: 'Bachelor of Science in Information Technology',
+    organization: 'Pamantasan ng Lungsod ng Valenzuela',
+    description: 'Expected graduation in 2026, with coursework and projects focused on web development, networking, and technical support.',
+    type: 'education',
+    tags: ['Web Development', 'Networking', 'Tech Support'],
+  },
+  {
+    date: 'Dec 2024 - Apr 2026',
+    title: 'Full-Stack Developer & Project Lead',
+    organization: 'CondoLink Capstone Project',
+    description: 'Led development of a responsive condominium management system for residents, staff, guards, and administrators.',
+    type: 'experience',
+    tags: ['React', 'TypeScript', 'PHP', 'MySQL'],
+  },
+  {
+    date: 'Jun 2025 - Oct 2025',
+    title: 'OJT - IT Support',
+    organization: 'Our Lady of Fatima University',
+    description: 'Completed 486 hours of hands-on IT support, assisting staff and users with hardware, software, printer, driver, Windows, and connectivity issues.',
+    type: 'experience',
+    tags: ['Troubleshooting', 'Windows', 'Printers', 'Networking'],
+  },
+  {
+    date: 'Mar 2026',
+    title: 'Developer & AI Seminars',
+    organization: 'Pamantasan ng Lungsod ng Valenzuela',
+    description: 'Attended seminars on real-world development, modern AI, and project management in the IT workforce.',
+    type: 'certification',
+    tags: ['AI', 'Development', 'Project Management'],
+  },
+  {
+    date: 'Apr 2026',
+    title: 'Emerging Technology Seminars',
+    organization: 'Pamantasan ng Lungsod ng Valenzuela',
+    description: 'Attended seminars on blockchain-enabled IoT for smart cities, AI and machine learning, and 3D multimedia workflows.',
+    type: 'certification',
+    tags: ['IoT', 'AI/ML', '3D Multimedia'],
+  },
+];
+
+const typeCodes: Record<TimelineItem['type'], string> = {
+  education: 'ED',
+  experience: 'EX',
+  certification: 'CT',
+};
+---
+
+<section id="experience" class="relative py-20 sm:py-28">
+  <div class="absolute inset-0 bg-[rgb(var(--color-bg-secondary)_/_0.5)]" aria-hidden="true"></div>
+
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(var(--color-primary))] mb-3 animate-on-scroll">My journey</p>
+      <h2 class="section-heading gradient-text animate-on-scroll">Experience & Education</h2>
+      <p class="section-subheading animate-on-scroll">
+        A timeline for education, internships, certifications, and relevant experience.
+      </p>
+    </div>
+
+    <div class="relative">
+      <div class="absolute left-4 sm:left-1/2 sm:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400/50 via-emerald-400/50 to-amber-300/50" aria-hidden="true"></div>
+
+      <div class="space-y-12">
+        {timelineItems.map((item, index) => (
+          <div class={`relative flex flex-col sm:flex-row items-start gap-6 sm:gap-10 animate-on-scroll ${
+            index % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse'
+          }`}>
+            <div class="absolute left-4 sm:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-[rgb(var(--color-bg-primary))] bg-cyan-300 z-10"></div>
+
+            <div class={`ml-12 sm:ml-0 sm:w-[calc(50%-2.5rem)] glass glass-hover rounded-2xl p-6 ${
+              index % 2 === 0 ? 'sm:text-right' : ''
+            }`}>
+              <div class={`flex items-center gap-2 mb-3 ${index % 2 === 0 ? 'sm:justify-end' : ''}`}>
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-400/10 text-[0.7rem] font-bold text-cyan-200" aria-hidden="true">{typeCodes[item.type]}</span>
+                <span class="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-[rgb(var(--color-primary)_/_0.1)] text-[rgb(var(--color-primary))]">
+                  {item.date}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold mb-1">{item.title}</h3>
+              <p class="text-sm font-medium text-[rgb(var(--color-primary))] mb-3">{item.organization}</p>
+              <p class="text-sm text-[rgb(var(--color-text-secondary))] leading-relaxed mb-4">
+                {item.description}
+              </p>
+              {item.tags && (
+                <div class={`flex flex-wrap gap-2 ${index % 2 === 0 ? 'sm:justify-end' : ''}`}>
+                  {item.tags.map((tag) => (
+                    <span class="tag text-xs">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+---
+import { resumeUrl, sectionUrl, site } from '../data/site';
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-cyan-500/10 via-emerald-500/5 to-transparent"></div>
+    <div class="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-amber-500/5 to-transparent"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(34,211,238,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.035)_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+  </div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm font-medium mb-8 animate-fade-in-up">
+      <span class="relative flex h-2.5 w-2.5" aria-hidden="true">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+      </span>
+      <span class="text-[rgb(var(--color-text-secondary))]">Open to Opportunities</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 animate-fade-in-up animation-delay-100">
+      Hi, I'm <span class="gradient-text">{site.name}</span>
+    </h1>
+
+    <p class="text-lg sm:text-xl md:text-2xl text-[rgb(var(--color-text-secondary))] font-medium mb-6 animate-fade-in-up animation-delay-200">
+      BSIT Graduate &bull; IT Support &bull; Web Development
+    </p>
+
+    <p class="text-base sm:text-lg text-[rgb(var(--color-text-secondary))] max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up animation-delay-300">
+      I build responsive web applications and provide hands-on technical support for hardware,
+      software, printers, Windows systems, and network connectivity issues.
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up animation-delay-400">
+      <a href={sectionUrl('projects')} class="btn-primary">
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+          View Projects
+        </span>
+      </a>
+      <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="btn-outline">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Download Resume
+      </a>
+      <a href={sectionUrl('contact')} class="btn-outline">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        Contact Me
+      </a>
+    </div>
+  </div>
+</section>

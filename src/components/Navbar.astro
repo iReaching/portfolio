@@ -1,0 +1,106 @@
+---
+import { homeUrl, resumeUrl, sectionUrl, site } from '../data/site';
+
+const navLinks = [
+  { label: 'About', href: sectionUrl('about') },
+  { label: 'Demo', href: sectionUrl('demo-reel') },
+  { label: 'Skills', href: sectionUrl('skills') },
+  { label: 'Projects', href: sectionUrl('projects') },
+  { label: 'Experience', href: sectionUrl('experience') },
+  { label: 'Contact', href: sectionUrl('contact') },
+];
+---
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Primary navigation">
+    <div class="flex items-center justify-between h-16 sm:h-20">
+      <a href={homeUrl} class="text-lg sm:text-xl font-bold gradient-text hover:opacity-80 transition-opacity">
+        &lt;{site.name.replaceAll(' ', '')} /&gt;
+      </a>
+
+      <ul class="hidden md:flex items-center gap-1">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="px-3 py-2 rounded-lg text-sm font-medium text-[rgb(var(--color-text-secondary))] hover:text-[rgb(var(--color-text-primary))] hover:bg-white/5 transition-all duration-200"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li class="ml-3">
+          <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="btn-primary text-sm !py-2 !px-4">
+            <span>Resume</span>
+          </a>
+        </li>
+      </ul>
+
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden hidden pb-4">
+      <ul class="flex flex-col gap-1">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="mobile-nav-link block px-3 py-2.5 rounded-lg text-sm font-medium text-[rgb(var(--color-text-secondary))] hover:text-[rgb(var(--color-text-primary))] hover:bg-white/5 transition-all duration-200"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+        <li class="mt-2">
+          <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="btn-primary text-sm !py-2 w-full justify-center">
+            <span>Resume</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  if (navbar && mobileMenuBtn && mobileMenu && menuIcon) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('glass', 'shadow-lg', 'shadow-black/10');
+      } else {
+        navbar.classList.remove('glass', 'shadow-lg', 'shadow-black/10');
+      }
+    });
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+      menuIcon.setAttribute('d', isOpen
+        ? 'M4 6h16M4 12h16M4 18h16'
+        : 'M6 18L18 6M6 6l12 12'
+      );
+    });
+
+    document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      });
+    });
+  }
+</script>
