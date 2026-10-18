@@ -11,16 +11,13 @@ import Contact from '../components/Contact.astro';
 import { site } from '../data/site';
 ---
 
-<BaseLayout
-  title={`${site.name} | ${site.role} Portfolio`}
-  description={site.description}
->
+<BaseLayout title={`${site.name} — Web Development & IT Support`}>
   <Hero />
-  <About />
-  <DemoReel />
-  <Skills />
   <Projects />
+  <DemoReel />
   <Timeline />
+  <Skills />
+  <About />
   <Resume />
   <Contact />
 </BaseLayout>

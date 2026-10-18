@@ -1,195 +1,103 @@
-# Andrei Rosca Portfolio
+# Andrei Rosca — Portfolio
 
-Modern static portfolio website for Andrei Rosca, an IT Support Specialist and Junior Web Developer. The site highlights hands-on IT support experience, full-stack projects, a demo reel, resume download, and contact links.
+A static Astro portfolio for web development and IT support. Production target:
+**https://ireaching.github.io/portfolio/**
 
-## Live Target
+## Requirements
 
-This project is configured for GitHub Pages under:
-
-```text
-https://ireaching.github.io
-```
-
-If deploying as a repository site, update `base` in `astro.config.mjs`.
-
-## Tech Stack
-
-- Astro
-- Tailwind CSS
-- TypeScript
-- MDX content collections for project pages
-- GitHub Actions for GitHub Pages deployment
-
-## Current Sections
-
-- Hero
-- About
-- Demo Reel
-- Skills
-- Projects
-- Experience and Education Timeline
-- Resume download
-- Contact links
-
-## Featured Projects
-
-Project pages are stored in `src/content/projects/`.
-
-- `condolink.mdx` - CondoLink capstone management system
-- `portfolio-website.mdx` - Graduate portfolio site
-- `slimeout.mdx` - Unity/C# maze game
-
-## Project Structure
-
-```text
-/
-|-- .github/workflows/deploy.yml
-|-- public/
-|   |-- demo-reel.mp4
-|   |-- favicon.svg
-|   |-- og-image.svg
-|   `-- resume.pdf
-|-- src/
-|   |-- components/
-|   |-- content/projects/
-|   |-- data/site.ts
-|   |-- layouts/
-|   |-- pages/
-|   |   |-- index.astro
-|   |   `-- projects/[slug].astro
-|   `-- styles/global.css
-|-- astro.config.mjs
-|-- package.json
-`-- README.md
-```
-
-## Run Locally
-
-Install dependencies:
+Node.js **22.22+** (Node 24 LTS recommended) and npm. TypeScript 6 is used because the Astro checker currently supports TypeScript 5/6.
 
 ```sh
-npm install
-```
-
-Start the Astro dev server in background mode:
-
-```sh
+npm ci
 npm run dev
 ```
 
-Check server status:
+The development server runs in background mode, as required by AGENTS.md:
 
 ```sh
 npm run dev:status
-```
-
-View server logs:
-
-```sh
 npm run dev:logs
-```
-
-Stop the background server:
-
-```sh
 npm run dev:stop
 ```
 
-Build the production site:
+## Verification
 
 ```sh
+npm run check
+npm run build
+npx playwright install chromium firefox webkit
+npm run test:e2e
+```
+
+The build includes local route/anchor/asset checks, non-empty project validation, metadata checks, and résumé/video verification. Browser tests start and stop a production preview automatically on port 4322. They cover project filters, booking conflicts and staff review, mobile keyboard navigation, theme persistence, WCAG checks in both themes, responsive widths, reduced motion, and no-JavaScript behavior.
+
+On Windows, Chromium tests use installed Microsoft Edge. On other platforms they use Playwright Chromium. For the quick Windows browser suite: `npm run test:e2e:chromium`.
+
+`npm run format` formats source, scripts, tests, and documentation.
+
+## Content and architecture
+
+- `src/data/profile.ts`: shared professional facts used by the homepage and printable résumé.
+- `src/data/site.ts`: base-aware link helpers.
+- `src/content/projects/*.mdx`: validated case studies; sorted by explicit `order`.
+- `src/assets/projects/`: real screenshots or labeled frames from the supplied reel.
+- `src/pages/projects/[slug].astro`: generated detail pages, contents navigation, social previews, repository context.
+- `src/components/WorkflowDemo.astro`: a separate sample-data illustration. It does not connect to CondoLink.
+- `src/pages/resume.astro`: readable, printable HTML résumé.
+- `public/resume.pdf`: PDF exported from that shared résumé.
+- `src/styles/global.css`: responsive layout, semantic dark/light tokens, focus and motion preferences.
+
+Projects require title, description, technologies, source URL, repository identifier, image/alt/caption, category, role, explicit date and order. Use a relative image path such as `../../assets/projects/your-project.webp`. Categories are defined in `src/content.config.ts`. Use `featured: true` selectively.
+
+Dates and responsibilities come from the existing portfolio. Graduation wording is deliberately neutral pending confirmation. No invented employment, adoption metrics, testimonials, or support incidents are published. See [remaining content needs](docs/content-needed.md).
+
+## Résumé updates
+
+Update `src/data/profile.ts` and the selected-project summary in `src/pages/resume.astro`. With the background dev server running:
+
+```sh
+npm run resume:export
 npm run build
 ```
 
-Preview the production build:
+The exporter uses Microsoft Edge on Windows, or Playwright Chromium elsewhere. Set `PLAYWRIGHT_CHANNEL` to choose another installed Chromium channel. The PDF is generated locally, not during every CI build, so deployment does not require a browser just to render the site.
+
+The résumé omits unconfirmed graduation language, the retired demo domain, and the third-party reference contact from the old PDF. Confirm your preferred final wording before sharing it with employers.
+
+## Media and social previews
+
+The reel is opt-in (`preload="none"`) with a poster, visual summary, and a WebVTT description track. The description track describes visuals; it is not a verified transcript of speech.
+
+`npm run media:optimize -- path/to/original.mp4` creates a 720p encode with fast-start metadata and regenerates the poster. Use an original source file to avoid repeatedly re-encoding a compressed copy. Review interface readability before replacing media.
+
+The current project images were captured from the existing reel and the deployed React portfolio. Replace the reel frames with clean screenshots when available. The SLIMEOUT image is a cropped gameplay detail.
+
+`scripts/generate-previews.mjs` generates PNG sharing previews from code-native SVG artwork before each build. After changing names or technologies, the normal build regenerates them.
+
+## Optional GitHub metadata
+
+Repository details are read from a checked-in snapshot. No visitor API requests or browser tokens are used.
 
 ```sh
-npm run preview
+npm run refresh:github
 ```
 
-## Edit Content
+To refresh during a build, set `REFRESH_GITHUB=1` in the environment. Failed API requests retain cached data. Ordinary builds use the snapshot and do not require GitHub API availability. `GITHUB_TOKEN` is optional and is read only by the refresh script.
 
-Update personal details and links in:
+## GitHub Pages
 
-```text
-src/data/site.ts
-```
+Only `.github/workflows/deploy.yml` publishes production. It validates and builds the site, uploads **dist**, then deploys that artifact. `.github/workflows/ci.yml` validates pull requests and runs browser tests without deploying.
 
-Update page sections in:
-
-```text
-src/components/About.astro
-src/components/DemoReel.astro
-src/components/Skills.astro
-src/components/Timeline.astro
-src/components/Resume.astro
-src/components/Contact.astro
-```
-
-Add or edit project pages in:
-
-```text
-src/content/projects/
-```
-
-Each `.mdx` file becomes a project card and detail page. Use this frontmatter shape:
-
-```md
----
-title: "Project Name"
-description: "Short project summary."
-techStack: ["React", "TypeScript", "PHP", "MySQL"]
-githubUrl: "https://github.com/iReaching/project"
-liveUrl: "https://example.com"
-featured: true
-publishDate: 2025-01-01
-order: 1
----
-```
-
-## Static Assets
-
-Replace these files directly when needed:
-
-```text
-public/resume.pdf
-public/demo-reel.mp4
-public/og-image.svg
-```
-
-`demo-reel.mp4` is embedded in the Demo Reel section. `resume.pdf` is used by the resume download buttons.
-
-## Deploy to GitHub Pages
-
-1. Confirm `astro.config.mjs` has the right `site`:
+In repository Settings → Pages, use **GitHub Actions** as the source. Configuration:
 
 ```js
 site: 'https://ireaching.github.io',
-```
-
-2. For a repository page such as `https://ireaching.github.io/portfolio`, uncomment and update:
-
-```js
 base: '/portfolio',
+output: 'static',
 ```
 
-3. Commit and push:
+Use the URL helpers for local links and assets. Generated canonical URLs and the sitemap include the project base.
 
-```sh
-git add .
-git commit -m "Update portfolio"
-git push
-```
+The generated sitemap is at `https://ireaching.github.io/portfolio/sitemap-index.xml`. Crawlers read robots rules from **https://ireaching.github.io/robots.txt**. A file at `/portfolio/robots.txt` would not control crawlers; manage robots at the account-site root if you control that separate site.
 
-4. In GitHub repository settings:
-
-- Go to `Settings > Pages`.
-- Set `Build and deployment > Source` to `GitHub Actions`.
-
-Pushes to `main` deploy automatically through `.github/workflows/deploy.yml`.
-
-## Notes
-
-- The contact form backend was removed; contact is handled through direct links.
-- The site is fully static and suitable for GitHub Pages.
-- Run `npm run build` before pushing changes.
+Dependabot checks npm packages and GitHub Actions monthly. Keep dependency updates reviewable and run the validation suite before merging.

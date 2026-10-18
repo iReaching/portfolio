@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-18T10:04:46.644Z",
+  "repositories": {
+    "iReaching/CAPSTONE1": {
+      "language": "JavaScript",
+      "pushedAt": "2025-10-11T06:34:20Z",
+      "url": "https://github.com/iReaching/CAPSTONE1"
+    },
+    "iReaching/grad-portfolio": {
+      "language": "TypeScript",
+      "pushedAt": "2026-06-14T01:39:52Z",
+      "url": "https://github.com/iReaching/grad-portfolio"
+    },
+    "iReaching/MAZEGAME": {
+      "language": "C#",
+      "pushedAt": "2024-12-12T14:33:08Z",
+      "url": "https://github.com/iReaching/MAZEGAME"
+    }
+  }
+}

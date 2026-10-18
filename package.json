@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "dev": "astro dev --background",
@@ -11,14 +11,34 @@
     "dev:stop": "astro dev stop",
     "dev:status": "astro dev status",
     "dev:logs": "astro dev logs",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-build.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "prebuild": "node scripts/refresh-github.mjs --if-enabled && node scripts/generate-previews.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:chromium": "playwright test --project=chromium",
+    "refresh:github": "node scripts/refresh-github.mjs",
+    "media:optimize": "node scripts/optimize-media.mjs",
+    "resume:export": "node scripts/export-resume.mjs",
+    "format": "prettier --write src scripts tests *.ts *.mjs *.json README.md docs .github"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.0",
-    "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.0.4",
-    "tailwindcss": "^4.3.2"
+    "@astrojs/mdx": "^8.1.0",
+    "@astrojs/sitemap": "^3.7.4",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "ffmpeg-static": "^5.3.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3",
+    "yaml": "^2.9.1"
   }
 }

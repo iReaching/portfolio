@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  site,
+  experience,
+  education,
+  professionalDevelopment,
+  skillGroups,
+} from '../data/profile';
+import { homeUrl, resumeUrl } from '../data/site';
+---
+
+<BaseLayout
+  title={`Résumé — ${site.name}`}
+  description={`${site.name}'s experience, projects, education and skills in web development and IT support.`}
+>
+  <div class="container resume-page">
+    <div class="resume-toolbar">
+      <a class="text-link" href={homeUrl}>
+        ← Back to portfolio
+      </a>
+      <div class="button-row">
+        <button class="btn-outline" id="print-resume" hidden>
+          Print résumé
+        </button>
+        <a
+          class="btn-primary"
+          href={resumeUrl}
+          download="Andrei-Rosca-Resume.pdf"
+        >
+          Download PDF ↓
+        </a>
+      </div>
+    </div>
+    <article class="resume-document">
+      <header>
+        <h1>{site.name}</h1>
+        <p>{site.role}</p>
+        <div class="resume-contact">
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={`tel:${site.phone.replaceAll(' ', '')}`}>{site.phone}</a>
+          <span>{site.location}</span>
+        </div>
+        <div class="resume-contact">
+          <a href={site.portfolio}>ireaching.github.io/portfolio</a>
+          <a href={site.github}>github.com/iReaching</a>
+          <a href={site.linkedin}>LinkedIn profile</a>
+        </div>
+        <p>
+          Hands-on IT support experience and full-stack web projects using
+          React, TypeScript, PHP, MySQL, and Tailwind CSS. Interested in junior
+          developer, IT support, and hybrid technology roles.
+        </p>
+      </header>
+      <section aria-labelledby="resume-experience">
+        <h2 id="resume-experience">Experience & project leadership</h2>
+        {experience.map((item) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <h3>{item.title}</h3>
+              <time datetime={item.start}>{item.date}</time>
+            </div>
+            <p>{item.organization}</p>
+            <p>{item.summary}</p>
+            <ul>
+              {item.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+      <section aria-labelledby="resume-projects">
+        <h2 id="resume-projects">Selected projects</h2>
+        <div class="resume-entry">
+          <h3>CondoLink · Capstone</h3>
+          <p>
+            Responsive condominium management system with role-based dashboards,
+            bookings, maintenance requests, announcements, and entry logs.
+            React, TypeScript, PHP, MySQL, Tailwind CSS.
+          </p>
+          <a class="text-link" href="https://github.com/iReaching/CAPSTONE1">
+            github.com/iReaching/CAPSTONE1
+          </a>
+        </div>
+        <div class="resume-entry">
+          <h3>Graduate Portfolio & SLIMEOUT</h3>
+          <p>
+            A deployed React/Vite portfolio and a one-button maze game built
+            with Unity and C#. Case studies and source links:{' '}
+            <a href={site.portfolio + '#projects'}>
+              ireaching.github.io/portfolio/#projects
+            </a>
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="resume-skills">
+        <h2 id="resume-skills">Technical skills</h2>
+        {skillGroups.map((group) => (
+          <p>
+            <strong>{group.title}:</strong> {group.skills.join(', ')}
+          </p>
+        ))}
+      </section>
+      <section aria-labelledby="resume-education">
+        <h2 id="resume-education">Education</h2>
+        <div class="resume-entry">
+          <div class="resume-entry-head">
+            <h3>{education.degree}</h3>
+            <span>
+              {education.start}–{education.end}
+            </span>
+          </div>
+          <p>{education.school}</p>
+          <p>{education.description}</p>
+        </div>
+      </section>
+      <section aria-labelledby="resume-development">
+        <h2 id="resume-development">Professional development</h2>
+        {professionalDevelopment.map((item) => (
+          <p>
+            {item.label} — {item.title} (seminar attendance).
+          </p>
+        ))}
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+<script>
+  const printButton = document.getElementById('print-resume');
+  if (printButton) {
+    printButton.hidden = false;
+    printButton.addEventListener('click', () => window.print());
+  }
+</script>

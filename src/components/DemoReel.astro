@@ -1,30 +1,94 @@
 ---
 import { assetUrl } from '../data/site';
-
-const demoReelUrl = assetUrl('demo-reel.mp4');
 ---
 
-<section id="demo-reel" class="relative py-20 sm:py-28">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <p class="text-sm font-semibold uppercase tracking-widest text-[rgb(var(--color-primary))] mb-3 animate-on-scroll">Project walkthrough</p>
-      <h2 class="section-heading gradient-text animate-on-scroll">Demo Reel</h2>
-      <p class="section-subheading animate-on-scroll">
-        A short video walkthrough showing selected work, project flow, and interface details.
-      </p>
-    </div>
-
-    <div class="glass rounded-2xl overflow-hidden animate-on-scroll">
+<section id="demo-reel" class="container reel-section" aria-label="Demo reel">
+  <details class="reel-details" id="demo-reel-details">
+    <summary>
+      <span>
+        <strong>Behind the work, in 47 seconds.</strong>
+        <small>Watch the original project & IT support reel</small>
+      </span>
+      <span aria-hidden="true">↗</span>
+    </summary>
+    <div class="reel-content">
       <video
-        class="w-full aspect-video bg-black"
+        id="demo-reel-video"
         controls
-        preload="metadata"
         playsinline
-        aria-label="Andrei Rosca demo reel video"
+        preload="none"
+        poster={assetUrl('demo-poster.webp')}
+        aria-label="Andrei Rosca project and IT support reel"
+        aria-describedby="reel-description"
       >
-        <source src={demoReelUrl} type="video/mp4" />
-        Your browser does not support the video tag.
+        <source src={assetUrl('demo-reel.mp4')} type="video/mp4" />
+        <track
+          kind="descriptions"
+          src={assetUrl('demo-descriptions.vtt')}
+          srclang="en"
+          label="Visual descriptions"
+        />
+        <p>
+          <a href={assetUrl('demo-reel.mp4')}>Download the demo reel</a>.
+        </p>
       </video>
+      <p id="reel-description">
+        A montage of university IT support work, the CondoLink interface, and
+        SLIMEOUT gameplay, followed by an introduction and contact information.
+      </p>
+      <details>
+        <summary>Read the visual summary</summary>
+        <ol class="visual-summary">
+          <li>
+            <a href="#demo-reel-video" data-seek="0">
+              00:00
+            </a>{' '}
+            — Introduction over the CondoLink dashboard.
+          </li>
+          <li>
+            <a href="#demo-reel-video" data-seek="5">
+              00:05
+            </a>{' '}
+            — Photographs of hands-on IT support and device troubleshooting at
+            Our Lady of Fatima University.
+          </li>
+          <li>
+            <a href="#demo-reel-video" data-seek="24">
+              00:24
+            </a>{' '}
+            — CondoLink interface and SLIMEOUT gameplay.
+          </li>
+          <li>
+            <a href="#demo-reel-video" data-seek="30">
+              00:30
+            </a>{' '}
+            — Personal introduction, learning goals, and contact details.
+          </li>
+        </ol>
+      </details>
     </div>
-  </div>
+  </details>
 </section>
+<script>
+  const reel = document.querySelector<HTMLVideoElement>('#demo-reel-video');
+  const disclosure =
+    document.querySelector<HTMLDetailsElement>('#demo-reel-details');
+  disclosure?.addEventListener('toggle', () => {
+    if (!disclosure.open) reel?.pause();
+  });
+  document.querySelectorAll<HTMLAnchorElement>('[data-seek]').forEach((link) =>
+    link.addEventListener('click', (event) => {
+      if (!reel) return;
+      event.preventDefault();
+      const seek = () => {
+        reel.currentTime = Number(link.dataset.seek);
+        reel.focus();
+      };
+      if (reel.readyState >= 1) seek();
+      else {
+        reel.addEventListener('loadedmetadata', seek, { once: true });
+        reel.load();
+      }
+    }),
+  );
+</script>

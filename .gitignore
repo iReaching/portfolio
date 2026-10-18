@@ -24,3 +24,7 @@ tmp/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Browser verification artifacts
+test-results/
+playwright-report/

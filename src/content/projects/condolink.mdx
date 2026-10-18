@@ -1,39 +1,58 @@
 ---
-title: "CondoLink"
-description: "A responsive condominium management system for residents and staff, including announcements, amenity bookings, maintenance requests, reports, entry logs, and role-based dashboards."
-techStack: ["React", "TypeScript", "PHP", "MySQL", "Tailwind CSS"]
-githubUrl: "https://github.com/iReaching/CAPSTONE1"
-liveUrl: "https://condolink.click"
+title: 'CondoLink'
+description: 'A condominium management system bringing announcements, bookings, maintenance requests, and role-based dashboards into one place.'
+techStack: ['React', 'TypeScript', 'PHP', 'MySQL', 'Tailwind CSS']
+githubUrl: 'https://github.com/iReaching/CAPSTONE1'
+repository: 'iReaching/CAPSTONE1'
+image: '../../assets/projects/condolink.webp'
+imageAlt: 'CondoLink dashboard with sidebar navigation, management controls, and announcement content'
+imageCaption: 'Interface frame from the original demo reel'
+category: 'Web applications'
+role: 'Full-stack developer & project lead · Capstone'
 featured: true
 publishDate: 2025-01-01
-order: 2
+order: 1
 ---
 
-## Overview
+## The problem
 
-CondoLink is my capstone project: a responsive web application for condominium residents, staff, guards, and administrators. The system centralizes building operations such as announcements, amenity booking, maintenance requests, reports, and entry logs.
+Condominium operations connect people with different responsibilities: residents, staff, guards, and administrators. Announcements, amenity bookings, maintenance requests, and entry logs need a shared home, with views appropriate to each user.
 
-## My Role
+CondoLink is my capstone project addressing these workflows through a responsive web application.
 
-I worked as the full-stack developer and project lead, managing planning, feature development, testing, debugging, and delivery.
+## My contribution
 
-## Key Features
+I worked as the **full-stack developer and project lead**. My responsibilities covered planning, feature development, testing, debugging, and delivery.
 
-- Resident, staff, guard, and administrator dashboards
-- Announcements and communication workflows
-- Amenity booking and request tracking
-- Maintenance request management
-- Entry logs and reports
-- Role-based access and user-specific features
+- Built front-end dashboards with **React**, **TypeScript**, and **Tailwind CSS**.
+- Developed **PHP** application logic for system workflows.
+- Connected **MySQL** tables to support dynamic, user-specific features.
+- Implemented role-based access and managed project development.
 
-## Technical Implementation
+## How the system fits together
 
-- Built front-end dashboards using **React**, **TypeScript**, and **Tailwind CSS**
-- Developed PHP back-end logic for system workflows
-- Connected MySQL tables for dynamic features and user-specific data
-- Organized testing and debugging around real user flows
+The React interface presents the dashboards and forms. PHP handles application workflows, with MySQL providing persistent data for the management features.
 
-## What I Learned
+1. **Interface:** residents and staff interact with responsive dashboards.
+2. **Application:** PHP connects user actions to the relevant workflow.
+3. **Data:** MySQL stores the information used by the system.
 
-This project strengthened my full-stack development skills, especially in role-based systems, database-backed workflows, project planning, debugging, and translating real operational needs into usable software.
+The key challenge is coordinating these layers while keeping different users’ tasks understandable.
 
+## Core workflows
+
+- **Residents:** announcements, amenity bookings, and maintenance requests.
+- **Staff and administrators:** management dashboards, reports, and request tracking.
+- **Guards:** entry logs and relevant operational views.
+
+The interactive example below illustrates a booking and review flow with fictional data. It is a separate portfolio demonstration; it does not connect to a live condominium system.
+
+## Testing and learning
+
+Testing and debugging were organized around user flows. The project strengthened my experience connecting responsive interfaces, application logic, and database-backed features.
+
+It also gave me practice planning a system with several user types, investigating issues across the stack, and translating operational needs into software.
+
+## Further validation
+
+A fuller engineering write-up should document authorization checks, booking conflicts, input validation, and database constraints against the source and test results. These are useful areas for the next technical review; no production-scale performance or adoption results are claimed here.

@@ -3,10 +3,11 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // For a project site like https://ireaching.github.io/portfolio, uncomment:
+  // GitHub Pages project site. Internal links use BASE_URL.
   site: 'https://ireaching.github.io',
   base: '/portfolio',
 
@@ -16,5 +17,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [mdx()],
+  trailingSlash: 'always',
+  integrations: [
+    mdx(),
+    sitemap({ filter: (page) => !/\/404(?:\/|\.html)?$/.test(page) }),
+  ],
 });

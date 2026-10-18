@@ -1,0 +1,185 @@
+<details class="demo-panel" id="booking-demo">
+  <summary>
+    Explore a sample booking workflow <span aria-hidden="true">↗</span>
+  </summary>
+  <p>
+    Try a resident request, then switch to staff to review it. Fictional sample
+    data; changes reset when you leave. This illustration is separate from the
+    original CondoLink application.
+  </p>
+  <noscript>
+    <p>
+      This interactive illustration needs JavaScript. The workflow is: a
+      resident requests an available amenity slot, then staff approve or decline
+      the request.
+    </p>
+  </noscript>
+  <div class="workflow-demo" id="workflow-demo" hidden>
+    <p class="demo-label">Interactive illustration · Sample data</p>
+    <fieldset class="demo-role">
+      <legend>Explore as</legend>
+      <label>
+        <input type="radio" name="demo-role" value="resident" checked />{' '}
+        Resident
+      </label>
+      <label>
+        <input type="radio" name="demo-role" value="staff" /> Staff
+      </label>
+    </fieldset>
+    <div class="demo-columns">
+      <form class="demo-card" id="booking-form">
+        <p class="small-label">Resident view</p>
+        <h3>Book the community room</h3>
+        <p>Sample day · Tuesday</p>
+        <label for="booking-slot">Available time slot</label>
+        <select id="booking-slot" name="slot">
+          <option value="09:00–10:00">09:00–10:00</option>
+          <option value="10:00–11:00">10:00–11:00</option>
+          <option value="11:00–12:00">11:00–12:00</option>
+        </select>
+        <button class="btn-primary" type="submit">
+          Request booking
+        </button>
+        <p id="resident-hint">
+          Submit a request, then switch to staff to review it.
+        </p>
+      </form>
+      <div class="demo-card">
+        <p class="small-label">Shared request history</p>
+        <h3>Bookings</h3>
+        <div id="booking-requests"></div>
+      </div>
+    </div>
+    <p
+      class="copy-status"
+      role="status"
+      aria-live="polite"
+      id="booking-status"
+    ></p>
+    <button class="text-link" id="booking-reset" type="button">
+      Reset sample
+    </button>
+  </div>
+</details>
+<script>
+  const disclosure =
+    document.querySelector<HTMLDetailsElement>('#booking-demo');
+  const openFromHash = () => {
+    if (disclosure && location.hash === '#booking-demo') disclosure.open = true;
+  };
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+  document.querySelectorAll('a[href="#booking-demo"]').forEach((link) =>
+    link.addEventListener('click', () => {
+      if (disclosure) disclosure.open = true;
+    }),
+  );
+  const root = document.getElementById('workflow-demo');
+  const form = document.querySelector<HTMLFormElement>('#booking-form');
+  const slots = document.querySelector<HTMLSelectElement>('#booking-slot');
+  const requestsElement = document.getElementById('booking-requests');
+  const status = document.getElementById('booking-status');
+  type Request = {
+    slot: string;
+    status: 'Pending review' | 'Approved' | 'Declined';
+  };
+  let requests: Request[] = [];
+  let role = 'resident';
+  function render() {
+    if (!root || !form || !slots || !requestsElement) return;
+    const staff = role === 'staff';
+    form
+      .querySelectorAll<HTMLButtonElement | HTMLSelectElement>('button, select')
+      .forEach((control) => (control.disabled = staff));
+    const hint = document.getElementById('resident-hint');
+    if (hint)
+      hint.textContent = staff
+        ? 'Staff can approve or decline pending requests in the history.'
+        : 'Submit a request, then switch to staff to review it.';
+    requestsElement.replaceChildren();
+    if (!requests.length) {
+      const empty = document.createElement('p');
+      empty.textContent = 'No requests yet. Choose a time slot to begin.';
+      requestsElement.append(empty);
+    }
+    for (const request of requests) {
+      const item = document.createElement('div');
+      item.className = 'demo-request';
+      const slot = document.createElement('p');
+      slot.textContent = `Community room · ${request.slot}`;
+      const state = document.createElement('p');
+      state.className = 'demo-status';
+      state.textContent = request.status;
+      item.append(slot, state);
+      if (staff && request.status === 'Pending review') {
+        for (const [label, next] of [
+          ['Approve', 'Approved'],
+          ['Decline', 'Declined'],
+        ] as const) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'btn-outline';
+          button.textContent = label;
+          button.setAttribute(
+            'aria-label',
+            `${label} booking for ${request.slot}`,
+          );
+          button.addEventListener('click', () => {
+            request.status = next;
+            render();
+            if (status)
+              status.textContent = `Booking for ${request.slot} ${next.toLowerCase()}.`;
+            document
+              .querySelector<HTMLInputElement>(
+                'input[name="demo-role"]:checked',
+              )
+              ?.focus();
+          });
+          item.append(button);
+        }
+      }
+      requestsElement.append(item);
+    }
+  }
+  if (root && form && slots && status) {
+    root.hidden = false;
+    render();
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (role !== 'resident') return;
+      const slot = slots.value;
+      if (
+        requests.some(
+          (request) => request.slot === slot && request.status !== 'Declined',
+        )
+      ) {
+        status.textContent =
+          'That slot already has a pending or approved booking. Choose another time.';
+        return;
+      }
+      requests.push({ slot, status: 'Pending review' });
+      render();
+      status.textContent = `Request for ${slot} submitted. Switch to staff to review it.`;
+    });
+    root
+      .querySelectorAll<HTMLInputElement>('input[name="demo-role"]')
+      .forEach((input) =>
+        input.addEventListener('change', () => {
+          role = input.value;
+          render();
+          status.textContent = `Now exploring the ${role} view.`;
+        }),
+      );
+    document.getElementById('booking-reset')?.addEventListener('click', () => {
+      requests = [];
+      role = 'resident';
+      const resident = root.querySelector<HTMLInputElement>(
+        'input[value="resident"]',
+      );
+      if (resident) resident.checked = true;
+      slots.selectedIndex = 0;
+      render();
+      status.textContent = 'Sample reset.';
+    });
+  }
+</script>
